@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Hardik's Bookstore</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="../css/mdb.min.css">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+<body id="suggested-books">
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col py-4 text-center">
+                    <h1 class="font-italic text-white text-uppercase title mt-2">Book Results</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-8 col-sm-10 mx-auto books">
+                    <div th:each="book,iter: ${books.items}">
+                        <img type="button" data-toggle="modal" data-target="#bookDataModal" th:attrappend="data-title=*{book.volumeInfo.title}, data-authors=*{book.volumeInfo.authors}, data-publisher=*{book.volumeInfo.publisher}, data-date=*{book.volumeInfo.publishedDate}, data-page=*{book.volumeInfo.pageCount}, data-description=*{book.volumeInfo.description}, data-link=*{book.volumeInfo.previewLink}" th:src="@{''+${book.volumeInfo.imageLinks.thumbnail}+''}" th:classappend="'book-'+${iter.index}" alt="" class="img-fluid book">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div style="background:linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.9) !important" class="footer-copyright fixed-bottom text-center py-2 black mt-2 text-white">© 2020 Copyright: Hardik Singh Behl <a href="https://www.github.com/hardikSinghBehl/booksRepository" target="_blank"><i class="fab fa-github text-white"></i></a>
+    </div>
+
+    <div class="pagination">
+        <form method="post" th:action="@{'/result/'+${pageNumber-1}}">
+            <input type="hidden" name="searchQuery" th:value="${searchQuery}">
+            <div th:if="${pageNumber}">
+                <button style="border:none;" class="btn-floating btn-lg btn-git" type="submit" role="button"><i class="fas fa-arrow-left"></i></button>
+            </div>
+        </form>
+
+        <a href="/" class="btn-floating btn-lg btn-yt" type="button" role="button"><i class="fas fa-home"></i></a>
+
+
+        <form method="post" th:action="@{'/result/'+${pageNumber+1} }">
+            <input type="hidden" name="searchQuery" th:value="${searchQuery}">
+            <button style="border:none;" class="btn-floating btn-lg btn-git" type="submit" role="button"><i class="fas fa-arrow-right"></i></button>
+        </form>
+    </div>
+
+
+
+
+    <div class="modal fade" id="bookDataModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+
+            <!--Content-->
+            <div class="modal-content">
+
+                <!--Header-->
+                <div class="modal-header light-blue darken-3 white-text">
+                    <a target="_blank" class="title link text-center" style="font-size: 1.8rem !important; margin-left: auto;margin-right: auto;text-decoration: none; color: white"><i class="fas fa-book"></i> Click Here To Read</a>
+                </div>
+
+                <!--Body-->
+                <div class="modal-body mb-0 text-center">
+                    <div class="row my-3">
+                        <div class="col-4">
+                            <div class="h5 font-weight-bold">Title</div>
+                        </div>
+                        <div class="col-8">
+                            <div id="title">Spring Boot In Action</div>
+                        </div>
+                    </div>
+                    <div class="row my-3">
+                        <div class="col-4">
+                            <div class="h5 font-weight-bold">Author(s)</div>
+                        </div>
+                        <div class="col-8">
+                            <div id="authors">Craig Walls</div>
+                        </div>
+                    </div>
+                    <div class="row my-3">
+                        <div class="col-4">
+                            <div class="h5 font-weight-bold">Publisher</div>
+                        </div>
+                        <div class="col-8">
+                            <div id="publisher">Manning Publications</div>
+                        </div>
+                    </div>
+                    <div class="row my-3">
+                        <div class="col-4">
+                            <div class="h5 font-weight-bold">Publish Date</div>
+                        </div>
+                        <div class="col-8">
+                            <div id="date">2015-10-28</div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-4">
+                            <div class="h5 font-weight-bold">Page Count</div>
+                        </div>
+                        <div class="col-8">
+                            <div id="page">275</div>
+                        </div>
+                    </div>
+                    <div class="divider-new chili-pepper mt-1 mb-2">
+                        <h4 class="text-center text-uppercase font-weight-bold mx-3">Description</h4>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div id="description">Summary A developer-focused guide to writing applications using Spring Boot. You'll learn how to bypass the tedious configuration steps so that you can concentrate on your application's behavior. Purchase of the print book includes a free eBook in PDF, Kindle, and ePub formats from Manning Publications.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--/.Content-->
+
+        </div>
+    </div>
+
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="../js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="../js/mdb.min.js"></script>
+    <!-- Your custom scripts (optional) -->
+    <script type="text/javascript">
+        $('#bookDataModal').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget);
+            var modal = $(this);
+                        
+            const title = button.data('title');
+            const authors = button.data('authors');
+            const publisher = button.data('publisher');
+            const date = button.data('date');
+            const page = button.data('page');
+            const link = button.data('link');
+            var description = button.data('description');
+            
+            if (description.length>331){
+            description = description.substring(0,330)+'...';
+            }
+            
+            modal.find('.link').attr('href', link);
+            modal.find('#title').text(title);
+            modal.find('#authors').text(authors);
+            modal.find('#publisher').text(publisher);
+            modal.find('#date').text(date);
+            modal.find('#page').text(page);
+            modal.find('#description').text(description);
+            
+        })
+
+    </script>
+
+</body>
+
+</html>
