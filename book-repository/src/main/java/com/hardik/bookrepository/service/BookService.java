@@ -7,7 +7,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class BookService {
 	
-	private final String apiKey = "..."; 
+	private final String apiKey = "";//Enter your Api Key Here  
 	
 	private RestTemplate restTemplate;
 	
